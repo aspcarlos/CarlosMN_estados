@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.carlosmn_estados.ui.theme.CarlosMN_estadosTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
@@ -50,14 +53,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-     @Composable
-     fun estados_d() {
-         var num1 by remember { mutableStateOf("") }
-         var num2 by remember { mutableStateOf("") }
-         var resultado by remember { mutableStateOf("") }
+@Preview
+@Composable
+fun estados_d() {
+         var num1 by rememberSaveable { mutableStateOf("") }
+         var num2 by rememberSaveable { mutableStateOf("") }
+         var resultado by rememberSaveable { mutableStateOf("") }
 
          Column(
-             modifier = Modifier.fillMaxSize().padding(16.dp)
+             modifier = Modifier.fillMaxSize().padding(16.dp),
+             verticalArrangement = Arrangement.Center, // Centra verticalmente
+             horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente
          ) {
              TextField(
                  value = num1,
@@ -72,35 +78,35 @@ class MainActivity : ComponentActivity() {
                  label = { Text("Número 2") },
                  modifier = Modifier.fillMaxWidth().padding(8.dp)
              )
-
+             // Primera Fila de botones
              Row {
-                 Button(onClick = {
-                     val result = num1.toDoubleOrNull()?.plus(num2.toDoubleOrNull() ?: 0.0) ?: 0.0
-                     resultado = result.toString()
-                 }) {
+                 Button(
+                     onClick = { resultado = (num1.toFloat() + num2.toFloat()).toString() }
+                 )
+                 {
                      Text("Sumar")
                  }
                  Spacer(modifier = Modifier.width(16.dp)) // Espacio de 16dp entre botones
-                 Button(onClick = {
-                     val result = num1.toDoubleOrNull()?.minus(num2.toDoubleOrNull() ?: 0.0) ?: 0.0
-                     resultado = result.toString()
-                 }) {
+                 Button(
+                     onClick = { resultado = (num1.toFloat() + num2.toFloat()).toString() }
+                 )
+                 {
                      Text("Restar")
                  }
              }
-
+            // Segunda Fila de botones
              Row {
-                 Button(onClick = {
-                     val result = num1.toDoubleOrNull()?.times(num2.toDoubleOrNull() ?: 1.0) ?: 0.0
-                     resultado = result.toString()
-                 }) {
+                 Button(
+                     onClick = { resultado = (num1.toFloat() * num2.toFloat()).toString() }
+                 )
+                 {
                      Text("Multiplicar")
                  }
                  Spacer(modifier = Modifier.width(16.dp)) // Espacio de 16dp entre botones
-                 Button(onClick = {
-                     val result = num1.toDoubleOrNull()?.div(num2.toDoubleOrNull() ?: 1.0) ?: 0.0
-                     resultado = result.toString()
-                 }) {
+                 Button(
+                     onClick = { resultado = (num1.toFloat() / num2.toFloat()).toString() }
+                 )
+                 {
                      Text("Dividir")
                  }
              }
@@ -109,21 +115,21 @@ class MainActivity : ComponentActivity() {
          }
      }
 
-
-     @Composable
-     fun estados_c() {
+@Preview
+@Composable
+fun estados_c() {
         var backgroundColor by remember { mutableStateOf(Color.White) } // Estado para el color de fondo
         Column(
             modifier = Modifier
                 .fillMaxSize() // Ocupa toda la pantalla
                 .background(backgroundColor) // Aplica el color de fondo
-                .padding(16.dp) // Margen de 16dp alrededor
+                .padding(16.dp), // Margen de 16dp alrededor
+            verticalArrangement = Arrangement.Center, // Centra verticalmente
+            horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente
         ) {
             // Botón para poner el fondo en rojo
             Button(
-                onClick = {
-                    backgroundColor = Color.Red
-                },
+                onClick = { backgroundColor = Color.Red },
                 modifier = Modifier.fillMaxWidth().padding(8.dp)
             ) {
                 Text("Rojo")
@@ -131,10 +137,7 @@ class MainActivity : ComponentActivity() {
 
             // Botón para poner el fondo en verde
             Button(
-                onClick = {
-                    backgroundColor = Color.Green
-
-                },
+                onClick = { backgroundColor = Color.Green },
                 modifier = Modifier.fillMaxWidth().padding(8.dp)
             ) {
                 Text("Verde")
@@ -142,10 +145,7 @@ class MainActivity : ComponentActivity() {
 
             // Botón para poner el fondo en azul
             Button(
-                onClick = {
-                    backgroundColor = Color.Blue
-
-                },
+                onClick = { backgroundColor = Color.Blue },
                 modifier = Modifier.fillMaxWidth().padding(8.dp)
             ) {
                 Text("Azul")
@@ -154,16 +154,19 @@ class MainActivity : ComponentActivity() {
 
      }
 
-    @Composable
-    fun estados_b() {
+@Preview
+@Composable
+fun estados_b() {
         // Variable de estado para almacenar el texto ingresado por el usuario
-        var text by remember { mutableStateOf("") }
-        var error by remember { mutableStateOf(false) }
+        var text by rememberSaveable { mutableStateOf("") }
+        var error by rememberSaveable { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
                 .fillMaxSize() // Ocupa toda la pantalla
-                .padding(16.dp) // Margen de 16dp alrededor
+                .padding(16.dp), // Margen de 16dp alrededor
+            verticalArrangement = Arrangement.Center, // Centra verticalmente
+            horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente
         ) {
             // Campo de texto para ingresar texto
             TextField(
@@ -192,8 +195,7 @@ class MainActivity : ComponentActivity() {
             Text(
                 text = text,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(start = 40.dp).fillMaxWidth()
                     .background(Color.Transparent)
                     .height(40.dp)
             )
@@ -214,11 +216,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
-    @Composable
-    fun estados_a() {
+@Preview
+@Composable
+fun estados_a() {
         // Variable de estado para almacenar el texto ingresado por el usuario
-        var text by remember { mutableStateOf("") }
+        var text by rememberSaveable { mutableStateOf("") }
 
         Column(
             modifier = Modifier
@@ -228,9 +230,7 @@ class MainActivity : ComponentActivity() {
             // Campo de texto para ingresar texto
             TextField(
                 value = text,
-                onValueChange = { newText ->
-                    text = newText
-                }, // Actualiza el estado al cambiar el texto
+                onValueChange = { newText -> text = newText }, // Actualiza el estado al cambiar el texto
                 modifier = Modifier
                     .fillMaxWidth() // Ocupa todo el ancho
                     .padding(top = 16.dp) // Margen superior de 16dp
